@@ -1,19 +1,14 @@
 import matplotlib.pyplot as plt
 
-# Hardcoded data for models and their macro metrics
 models = [
     "Logistic Regression",
     "CNN",
-    "BART-LARGE-MNLI",
-    "BART-LARGE",
-    "Fine-tuned BART-LARGE",
-    "BERT",
-    "Fine-tuned BERT",
+    "Fine-tuned BART-base",
+    "Fine-tuned BERT-base",
 ]
-precision_scores = [0.63, 0.52, 0.14, 0, 0.49, 0, 0]
-recall_scores = [0.16, 0.15, 0.65, 0, 0.25, 0, 0]
-macro_f1_scores = [0.26, 0.20, 0.19, 0, 0.30, 0, 0]
-
+precision_scores = [0.63, 0.52, 0.59, 0.58]
+recall_scores = [0.16, 0.15, 0.44, 0.45]
+macro_f1_scores = [0.26, 0.20, 0.49, 0.49]
 
 fig, ax = plt.subplots(figsize=(12, 8))
 
@@ -21,17 +16,17 @@ bar_width = 0.2
 space = 0.1
 index = range(len(models))
 
-plt.bar(index, precision_scores, bar_width, label="Precision", color="blue")
-
-plt.bar(
+bars1 = plt.bar(
+    index, precision_scores, bar_width, label="Macro Precision", color="blue"
+)
+bars2 = plt.bar(
     [i + bar_width for i in index],
     recall_scores,
     bar_width,
-    label="Recall",
+    label="Macro Recall",
     color="green",
 )
-
-plt.bar(
+bars3 = plt.bar(
     [i + 2 * bar_width for i in index],
     macro_f1_scores,
     bar_width,
@@ -39,15 +34,44 @@ plt.bar(
     color="red",
 )
 
+for bar in bars1:
+    yval = bar.get_height()
+    plt.text(
+        bar.get_x() + bar.get_width() / 2,
+        yval,
+        round(yval, 2),
+        ha="center",
+        va="bottom",
+    )
+
+for bar in bars2:
+    yval = bar.get_height()
+    plt.text(
+        bar.get_x() + bar.get_width() / 2,
+        yval,
+        round(yval, 2),
+        ha="center",
+        va="bottom",
+    )
+
+for bar in bars3:
+    yval = bar.get_height()
+    plt.text(
+        bar.get_x() + bar.get_width() / 2,
+        yval,
+        round(yval, 2),
+        ha="center",
+        va="bottom",
+    )
+
 plt.title(
-    "Performance of Different Models in terms of Precision, Recall, and Macro F1 Score"
+    "Performance of Different Models in terms of Macro Precision, Recall, and F1 Score"
 )
 plt.xlabel("Models")
 plt.ylabel("Scores")
 
 wrapped_labels = ["\n".join(label.split()) for label in models]
-plt.xticks([i + bar_width for i in index], wrapped_labels)
+plt.xticks([i + bar_width for i in index], wrapped_labels, rotation=0, ha="center")
 
 plt.legend()
-
 plt.show()
