@@ -6,6 +6,7 @@ models = [
     "Fine-tuned BART-base",
     "Fine-tuned BERT-base",
 ]
+# Macro precision, recall, and F1 scores for each model
 precision_scores = [0.63, 0.52, 0.59, 0.58]
 recall_scores = [0.16, 0.15, 0.44, 0.45]
 macro_f1_scores = [0.26, 0.20, 0.49, 0.49]
@@ -74,4 +75,5 @@ wrapped_labels = ["\n".join(label.split()) for label in models]
 plt.xticks([i + bar_width for i in index], wrapped_labels, rotation=0, ha="center")
 
 plt.legend()
+plt.savefig("model_performance.png")
 plt.show()

@@ -12,3 +12,9 @@ Install requirements
 ```
 pip install -r requirements.txt
 ```
+
+# Model Performance
+
+This plot shows the performance of different models in terms of Macro Precision, Recall, and F1 Score. All fine-tuning is done through Colab GPU.
+
+![Model Performance](model_performance.png)
