@@ -17,7 +17,6 @@ X_test = ds["test"]["text"]
 y_test = mlb.fit_transform(ds["test"]["labels"])
 
 # Convert the text data to TF-IDF features
-# Note that this TF-IDF does not handle emojis
 tfidf = TfidfVectorizer(max_features=5000, stop_words="english")
 X_train_tfidf = tfidf.fit_transform(X_train)
 X_dev_tfidf = tfidf.transform(X_dev)
@@ -27,7 +26,7 @@ X_test_tfidf = tfidf.transform(X_test)
 model = OneVsRestClassifier(LogisticRegression(max_iter=1000))
 model.fit(X_train_tfidf, y_train)
 
-# Evaluate the model on the training set
+# Evaluate on the training set
 y_train_pred = model.predict(X_train_tfidf)
 print("Training Set Accuracy:", accuracy_score(y_train, y_train_pred))
 print(
@@ -35,7 +34,7 @@ print(
     classification_report(y_train, y_train_pred, zero_division=0),
 )
 
-# Evaluate the model on the development set
+# Evaluate on the development set
 y_dev_pred = model.predict(X_dev_tfidf)
 print("Development Set Accuracy:", accuracy_score(y_dev, y_dev_pred))
 print(
@@ -43,7 +42,7 @@ print(
     classification_report(y_dev, y_dev_pred, zero_division=0),
 )
 
-# Evaluate the model on the test set
+# Evaluate on the test set
 y_test_pred = model.predict(X_test_tfidf)
 print("Test Set Accuracy:", accuracy_score(y_test, y_test_pred))
 print(
